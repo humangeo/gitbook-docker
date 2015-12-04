@@ -1,12 +1,12 @@
 #!/bin/sh -eux
 # docker-provision.sh --- Provisioning script for a Docker container w/GitBook.
-GITBOOK_VERSION="0.3.6"
+GITBOOK_VERSION="1.0.1"
 
 # update Apt repositories
 apt-get update
 
 # install dependencies
-apt-get install -y --no-install-recommends git #calibre
+apt-get install -y --no-install-recommends git calibre
 
 # install GitBook CLI
 npm install -g gitbook-cli@$GITBOOK_VERSION

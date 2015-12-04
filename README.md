@@ -9,8 +9,13 @@ This image can be used to build books with the GitBook CLI.
 
 ## Usage
 
-### Use Case #1: Running GitBook Directly
+### Use Case #1: Generating HTML
 
-To run aglio with the current directory mounted to `/docs`:
+To run gitbook with the current directory mounted to `/docs`:
 
     $ docker run -ti --rm -v `pwd`:/docs humangeo/gitbook <path to your book>
+
+
+### Use Case #2: Building a PDF
+
+    $ docker run -ti --rm -v `pwd`:/docs humangeo/gitbook pdf <path to your book>
