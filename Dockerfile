@@ -1,7 +1,7 @@
 FROM node:0-slim
 
 ADD docker-provision.sh /tmp/
-RUN cd /tmp/ && sh docker-provision.sh && rm /tmp/docker-provision.sh
+RUN cd /tmp/ && sh docker-provision.sh
 
 WORKDIR /docs
 

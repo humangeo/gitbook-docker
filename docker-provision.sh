@@ -1,6 +1,6 @@
 #!/bin/sh -eux
 # docker-provision.sh --- Provisioning script for a Docker container w/GitBook.
-GITBOOK_VERSION="1.0.1"
+GITBOOK_VERSION="2.1.3"
 
 # update Apt repositories
 apt-get update
@@ -12,10 +12,7 @@ apt-get install -y --no-install-recommends git calibre
 npm install -g gitbook-cli@$GITBOOK_VERSION
 
 # install the latest version...gets installed in $HOME (i.e. /root)
-gitbook versions:install latest
-
-# add commonly used GitBook plugins
-npm install -g gitbook-plugin-include-codeblock
+gitbook fetch latest
 
 # add gitbook wrapper script
 cat <<EOF > /usr/local/bin/gitbookw
@@ -28,11 +25,12 @@ EOF
 chmod +x /usr/local/bin/gitbookw
 
 # clean up (apt)
-apt-get clean     # remove packages that have been downloaded, installed, and no longer needed
-apt-get autoclean # remove archived packages that can no longer be downloaded
+apt-get clean       # remove packages that have been downloaded, installed, and no longer needed
+apt-get autoclean   # remove archived packages that can no longer be downloaded
+apt-get autoremove
 
 # clean up (misc.)
-rm -rf /var/lib/apt/lists/* /var/cache/apt/* /root/.npm
+rm -rf /var/lib/apt/lists/* /var/cache/apt/* /root/.npm /tmp/npm*
 
 # Add empty docs directory
 mkdir -p /docs
