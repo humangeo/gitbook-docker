@@ -1,4 +1,4 @@
-FROM node:0-slim
+FROM node:6-slim
 
 ADD docker-provision.sh /tmp/
 RUN cd /tmp/ && sh docker-provision.sh
