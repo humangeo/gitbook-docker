@@ -1,14 +1,14 @@
-FROM node:11
+FROM node:11.2 
 
 RUN apt update && apt install -y -qq wget curl libfontconfig libgl1-mesa-dev libxrender-dev libxcomposite-dev python sudo
 RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin
 
-ENV VAGRANT_PASSWORD='$6$rounds=656000$OY1EmeRe9//dqf8D$KRUcAe5ezDDL4hDe7nCGdURxev0jnIpOAAtfFzhPdd9wmNouedwX7EMxUaF16yrxxOUgpQlrpHVsZkIokXDKv0'
-ENV VAGRANT_USER='vagrant' 
-RUN useradd --create-home --user-group --password "${VAGRANT_PASSWORD}" "${VAGRANT_USER}"
+ENV USER_PASSWORD='$6$rounds=656000$OY1EmeRe9//dqf8D$KRUcAe5ezDDL4hDe7nCGdURxev0jnIpOAAtfFzhPdd9wmNouedwX7EMxUaF16yrxxOUgpQlrpHVsZkIokXDKv0'
+ENV USER_NAME='gitbook' 
+RUN useradd --create-home --user-group --password "${USER_PASSWORD}" "${USER_NAME}"
 
-RUN mkdir -p /etc/sudoers.d/ && echo "${VAGRANT_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/vagrant        
-RUN su vagrant -c ' \
+RUN mkdir -p /etc/sudoers.d/ && echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USER_NAME        
+RUN su $USER_NAME -c ' \
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash \
     && export NVM_DIR="$HOME/.nvm" \
     && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
@@ -19,4 +19,4 @@ RUN su vagrant -c ' \
 WORKDIR /docs
 
 # run GitBook when the container starts
-ENTRYPOINT ["gitbook"]
+ENTRYPOINT ["/home/gitbook/.nvm/versions/node/v11.2.0/bin/gitbook"]
