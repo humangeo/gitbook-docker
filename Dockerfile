@@ -3,9 +3,8 @@ FROM node:11.2
 RUN apt update && apt install -y -qq wget curl libfontconfig libgl1-mesa-dev libxrender-dev libxcomposite-dev python sudo
 RUN wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sh /dev/stdin
 
-ENV USER_PASSWORD='$6$rounds=656000$OY1EmeRe9//dqf8D$KRUcAe5ezDDL4hDe7nCGdURxev0jnIpOAAtfFzhPdd9wmNouedwX7EMxUaF16yrxxOUgpQlrpHVsZkIokXDKv0'
 ENV USER_NAME='gitbook' 
-RUN useradd --create-home --user-group --password "${USER_PASSWORD}" "${USER_NAME}"
+RUN useradd --create-home --user-group --password "" "${USER_NAME}"
 
 RUN mkdir -p /etc/sudoers.d/ && echo "${USER_NAME} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/$USER_NAME        
 RUN su $USER_NAME -c ' \
